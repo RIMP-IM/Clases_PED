@@ -75,19 +75,24 @@ public:
 	void insFinal(int dato) {
 		nodo* p, * q;
 
-		p = pInicio;
-		q = NULL;
-
-		while (p != NULL)
-		{
-			q = p;
-			p = p->sig;
-		}
 		nodo* nuevo = new nodo;
 		nuevo->dato = dato;
 		nuevo->sig = NULL;
-		q->sig = nuevo;
+		if (pInicio == NULL)
+			pInicio = nuevo;
+		else {
+			p = pInicio;
+			q = NULL;
+
+			while (p != NULL)
+			{
+				q = p;
+				p = p->sig;
+			}			
+			q->sig = nuevo;
+		}
 	}
+
 };
 
 int main() {
@@ -122,7 +127,8 @@ int main() {
 	{
 		cout << "Digite el dato: ";
 		cin >> dato;
-		miLista.insertarInicioLista(dato);
+		//miLista.insertarInicioLista(dato);
+		miLista.insFinal(dato);
 
 		cout << "Desea ingresar un dato (s/n)? ";
 		cin >> respuesta;
