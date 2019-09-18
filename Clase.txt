@@ -1,0 +1,56 @@
+//Lista Simple
+struct nodo
+{
+	int dato;
+	nodo* sig;
+};
+
+class ListaSimple
+{
+private:
+	nodo* pInicio;
+public:
+	//funcion de constructor, se ejecuta automaticamente.
+	ListaSimple(void) {
+		cout << "miLista ha sido inicializado." << endl;
+		pInicio = NULL;
+	}
+	//funcion de destructor.
+	~ListaSimple(void) {
+
+	}
+	void insertarInicioLista(int dato) {
+		nodo* nuevo;
+		nuevo = new nodo;
+		nuevo->dato = dato;
+		if (pInicio == NULL)
+			pInicio = nuevo;
+		else {
+			nuevo->sig = pInicio;
+			pInicio = nuevo;
+		}
+	}
+};
+
+int main() {
+
+	ListaSimple miLista;
+
+	char respuesta;
+	int dato;
+
+	cout << "Desea meter un dato (s/n)? ";
+	cin >> respuesta;
+
+	while (respuesta == 's')
+	{
+		cout << "Digite el dato: ";
+		cin >> dato;
+		miLista.insertarInicioLista(dato);
+
+		cout << "Desea meter un dato (s/n)? ";
+		cin >> respuesta;
+	}
+	
+	return 0;
+}
