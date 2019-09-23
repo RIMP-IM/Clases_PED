@@ -82,8 +82,51 @@ public:
 			{
 				q = p;
 				p = p->sig;
-			}			
+			}
 			q->sig = nuevo;
+		}
+	}
+
+	void InsAntes(int dato, int datoRef) {
+		nodo* nuevo, * p, * q;
+
+		nuevo = new nodo;
+		nuevo->dato = dato;
+
+		p = pInicio;
+		q = NULL;
+		while (p != NULL && p->dato != datoRef)
+		{
+			q = p;
+			p = p->sig;
+		}
+
+		if (q == NULL)
+		{
+			if (p == NULL) {
+				cout << "Insertaste el primero" << endl;
+				pInicio = nuevo;
+				pInicio->sig = NULL;
+			}
+			else
+			{
+				cout << "Dato de referencia esta al principio" << endl;
+				pInicio = nuevo;
+				pInicio->sig = p;
+			}
+		}
+		else {
+			if (p == NULL) {
+				cout << "Dato de referencia no encontrado" << endl;
+				q->sig = nuevo;
+				nuevo->sig = NULL;
+			}
+			else
+			{
+				cout << "Dato insertado a la mitad de la lista" << endl;
+				q->sig = nuevo;
+				nuevo->sig = p;
+			}
 		}
 	}
 
@@ -94,7 +137,7 @@ int main() {
 	ListaSimple miLista;
 
 	char respuesta;
-	int dato;
+	int dato,dRef;
 
 	cout << "Desea meter un dato (s/n)? ";
 	cin >> respuesta;
@@ -103,8 +146,11 @@ int main() {
 	{
 		cout << "Digite el dato: ";
 		cin >> dato;
+		cout << "Antes de cual se va a insertar? "<<endl;
+		cin >> dRef;
+		miLista.InsAntes(dato, dRef);
 		//miLista.insertarInicioLista(dato);
-		miLista.insFinal(dato);
+		//miLista.insFinal(dato);
 
 		cout << "Desea ingresar un dato (s/n)? ";
 		cin >> respuesta;
