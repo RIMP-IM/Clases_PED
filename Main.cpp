@@ -27,6 +27,8 @@ public:
 	void InsAntes(int, int);
 	void BuscarElemento(int);
 	void InsDespues(int, int);
+	void EliminarNodo(int);
+	void eliminarLista(void);
 };
 
 ListaSimple::ListaSimple(void) {
@@ -34,6 +36,9 @@ ListaSimple::ListaSimple(void) {
 }
 //funcion de destructor.
 //~ListaSimple(void);
+
+//Inserción despues de un elemento determinado
+//Inserción de elementos en orden
 
 void ListaSimple::insertarInicioLista(int dato) {
 	nodo* nuevo;
@@ -53,10 +58,10 @@ void ListaSimple::mostrarLista(void) {
 		cout << s->dato << " ";
 		s = s->sig;
 	}
-	cout << endl;
+	if (pInicio == NULL)
+	cout << "La lista esta vacia" << endl;
 
 }
-
 void ListaSimple::llamarMLO(void) {
 	mostrarListaOrden(pInicio);
 	cout << endl;
@@ -65,7 +70,6 @@ void ListaSimple::llamrMLRD(void) {
 	mostrarListaRecD(pInicio);
 	cout << endl;
 }
-
 void ListaSimple::mostrarListaOrden(nodo* s) {
 	if (s != NULL) {
 		mostrarListaOrden((s->sig));
@@ -78,7 +82,6 @@ void ListaSimple::mostrarListaRecD(nodo* s) {
 		mostrarListaRecD((s->sig));
 	}
 }
-
 void ListaSimple::insFinal(int dato) {
 	nodo* p, * q;
 
@@ -99,7 +102,6 @@ void ListaSimple::insFinal(int dato) {
 		q->sig = nuevo;
 	}
 }
-
 void ListaSimple::InsAntes(int dato, int datoRef) {
 	nodo* nuevo, * p, * q;
 
@@ -142,7 +144,6 @@ void ListaSimple::InsAntes(int dato, int datoRef) {
 		}
 	}
 }
-
 void ListaSimple::BuscarElemento(int dato) {
 	nodo* s = pInicio;
 
@@ -155,9 +156,8 @@ void ListaSimple::BuscarElemento(int dato) {
 	else
 		cout << "El dato no esta en la lista." << endl;
 }
-
 void ListaSimple::InsDespues(int dato, int datoRef) {
-	nodo* q = pInicio, *nuevo,*p;
+	nodo* q = pInicio, * nuevo, * p;
 
 	nuevo = new nodo;
 	nuevo->dato = dato;
@@ -166,28 +166,36 @@ void ListaSimple::InsDespues(int dato, int datoRef) {
 		q = q->sig;
 	}
 }
+void ListaSimple::EliminarNodo(int datoRef) {
+	nodo* p = pInicio, * q = NULL;
 
-void ListaSimple::EliminarNodo(int datoRef){
-	nodo *p = pInicio, *q = NULL;
-	
-	while(p != NULL && p->dato != datoRef){
+	while (p != NULL && p->dato != datoRef) {
 		q = p;
-		p = q;		
+		p = p->sig;
 	}
-	if (p != NULL){
-		if (q != NULL){
+	if (p != NULL) {
+		if (q != NULL) {
 			q->sig = p->sig;
-		}else {
-			pInicio = p->sig;
+		}
+		else {
+			pInicio->sig = p->sig;
 			delete p;
 		}
-		
-	}else {
-		cout << "El elemento no existe" << endl;
 	}
-	
+	else {
+		cout << "Dato a borrar NO existe" << endl;
+	}
 }
+void ListaSimple::eliminarLista(void) {
+	nodo* s = pInicio, *q;
 
+	while (pInicio != NULL && s->sig != NULL) {
+		q = s->sig;
+		delete s;
+		s = q;
+	}
+	pInicio = NULL;
+}
 int main() {
 
 	ListaSimple miLista;
@@ -222,6 +230,10 @@ int main() {
 	cout << "Digite el dato a buscar: ";
 	cin >> datoBuscar;
 	miLista.BuscarElemento(datoBuscar);
+
+	cout << "Eliminando la lista." << endl;
+	miLista.eliminarLista();
+	miLista.mostrarLista();
 
 	return 0;
 }
