@@ -29,6 +29,9 @@ public:
 	void InsDespues(int, int);
 	void EliminarNodo(int);
 	void eliminarLista(void);
+	void eliminarListaAlt(void);
+	void eliminarRec(void);
+	void eliminarRec(nodo* s);
 };
 
 ListaSimple::ListaSimple(void) {
@@ -196,6 +199,25 @@ void ListaSimple::eliminarLista(void) {
 	}
 	pInicio = NULL;
 }
+void ListaSimple::eliminarListaAlt(void) {
+	nodo* s = pIinicio;
+
+	while (pInicio != NULL) {
+		s = pInicio;
+		pInicio = pInicio->sig;
+		delete (s);
+	}
+}
+void ListaSimple::eliminarRec(void) {
+	eliminarRec(pInicio);
+	pInicio = NULL;
+}
+void ListaSimple::eliminarRec(nodo *s) {
+	if (s != NULL){
+		eliminarRec(s->sig);
+		delete(s);
+	}
+}
 int main() {
 
 	ListaSimple miLista;
@@ -232,7 +254,7 @@ int main() {
 	miLista.BuscarElemento(datoBuscar);
 
 	cout << "Eliminando la lista." << endl;
-	miLista.eliminarLista();
+	miLista.eliminarLista();//miLista.eliminarListaAlt();
 	miLista.mostrarLista();
 
 	return 0;
